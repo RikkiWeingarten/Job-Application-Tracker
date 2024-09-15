@@ -43,9 +43,9 @@ def main():
             round = int(input("Enter interview round: "))
             place = input("Enter interview place: ")
             type = input("Enter interview type (technical/hr/manager): ")
-            company_id = int(input("Enter company ID: "))
+            date = input("Enter the date (YYYY-MM-DD): ")
             app_id = int(input("Enter application ID: "))
-            create_interview(round, place, type, company_id, app_id)
+            create_interview(round, place, type, date, app_id)
 
         elif choice == "4":
             app_id = int(input("Enter application ID: "))

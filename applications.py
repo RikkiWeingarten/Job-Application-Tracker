@@ -92,13 +92,13 @@ def create_job_application(application_job_name, company_name, position_name, ca
 
 
 
-def create_interview(round, place, type, company_id, app_id):
+def create_interview(round, place, type, date, app_id):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     cursor.execute('''
-        INSERT INTO Interview (round, place, type, company_id, app_id)
+        INSERT INTO Interview (round, place, type, interview_date, application_id)
         VALUES (?, ?, ?, ?, ?)
-    ''', (round, place, type, company_id, app_id))
+    ''', (round, place, type, date, app_id))
     conn.commit()
     conn.close()
 
@@ -174,7 +174,7 @@ def track_job_application(company_name, position_name):
         FROM Application
         JOIN Company ON Application.company_id = Company.id
         JOIN Position ON Application.position_id = Position.id
-        JOIN Interview ON Interview.app_id = Application.id
+        JOIN Interview ON Interview.application_id = Application.id
         WHERE Company.company_name = ? AND Position.position_name = ?
     '''
     cursor.execute(query, (company_name, position_name))
