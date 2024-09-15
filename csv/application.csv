@@ -1,0 +1,4 @@
+id,application_job_name,company_id,position_id,application_date,followup_date,salary,status
+1,Software Engineer,101,202,2024-09-01,2024-09-15,80000,Applied
+2,Data Analyst,102,203,2024-09-05,2024-09-20,75000,Interview Scheduled
+3,Product Manager,103,204,2024-09-10,2024-09-25,90000,Offer Received
