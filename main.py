@@ -36,8 +36,10 @@ def main():
             followup_date = input("Enter follow-up date (YYYY-MM-DD): ")
             salary = float(input("Enter salary: "))
             status = input("Enter status (open/closed): ")
+            category =  input("Enter Category: ")
+            year_experience = input("Enter Years of Experience: ")
             create_job_application(application_job_name, company_name,
-                                   position, application_date, followup_date, salary, status)
+                                   position, category, year_experience, application_date, followup_date, salary, status)
 
         elif choice == "3":
             round = int(input("Enter interview round: "))
@@ -68,6 +70,7 @@ def main():
             position = input("Enter position: ")
             applications = get_applications_by_position(position)
             print(f"\n--- Applications for Position: {position} ---")
+            print(applications)
             for app in applications:
                 print(f"Application ID: {app[0]}\nJob Name: {app[1]}\nCompany ID: {app[2]}\nPosition ID: {app[3]}"
                       f"\nApplication Date: {app[4]}\nFollow-up Date: {app[5]}\nSalary: {app[6]}\nStatus: {app[7]}\n")

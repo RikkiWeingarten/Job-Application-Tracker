@@ -22,15 +22,54 @@ def upload_csv_to_db(csv_file, table_name, db_name='applications.db'):
     print(f"Data successfully imported to {table_name} table.")
 
 
-def create_job_application(application_job_name, company_id, position_id, application_date, followup_date, salary, status):
+def create_job_application(application_job_name, company_name, position_name, category, year_experience, application_date, followup_date, salary, status):
+    # Establish database connection
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
+
+    # Check if the company exists
+    cursor.execute(
+        "SELECT id FROM company WHERE company_name = ?", (company_name,))
+    company_result = cursor.fetchone()
+
+    if company_result:
+        company_id = company_result[0]
+    else:
+        cursor.execute(
+            "INSERT INTO company (company_name) VALUES (?)", (company_name,))
+        conn.commit()  # Save the new company to get the company_id
+
+        # Retrieve the newly inserted company_id
+        company_id = cursor.lastrowid
+        print(f"New company '{company_name}' created with ID {company_id}")
+
+    # Get position_id based on the position name
+    cursor.execute("SELECT id FROM position WHERE position_name = ?", (position_name,))
+    position_result = cursor.fetchone()
+
+    if position_result:
+        position_id = position_result[0]
+    else:
+        cursor.execute(
+            "INSERT INTO position (position_name, category, year_experience) VALUES (?, ?, ?)", (position_name, category, year_experience))
+        conn.commit()  
+
+        # Retrieve the newly inserted company_id
+        position_id = cursor.lastrowid
+        print(f"New company '{position_name}' created with ID {position_name}")
+
     cursor.execute('''
         INSERT INTO Application (application_job_name, company_id, position_id, application_date, followup_date, salary, status)
         VALUES (?, ?, ?, ?, ?, ?, ?)
     ''', (application_job_name, company_id, position_id, application_date, followup_date, salary, status))
+
     conn.commit()
     conn.close()
+
+    print(f"Job application for '{
+          application_job_name}' created successfully!")
+
+
 
 
 def create_interview(round, place, type, company_id, app_id):
