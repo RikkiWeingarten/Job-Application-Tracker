@@ -1,5 +1,5 @@
 from applications import (
-    create_job_application, create_interview, update_application_status, delete_job_application,
+    upload_csv_to_db, create_job_application, create_interview, update_application_status, delete_job_application,
     get_applications_by_company, get_applications_by_position, get_applications_by_status, track_job_application
 )
 
@@ -24,9 +24,7 @@ def main():
         choice = input("Enter your choice: ")
 
         if choice == "1":
-            csv_file = input("Enter CSV file path: ")
-            table_name = input("Enter the table name: ")
-            upload_csv_to_db(csv_file, table_name)
+            upload_csv_to_db()
 
         elif choice == "2":
             application_job_name = input("Enter job application name: ")

@@ -5,7 +5,7 @@ import csv
 DB_NAME = 'applications.db'
 
 
-def upload_csv_to_db(db_name='applications.db'):
+def upload_csv_to_db():
     # List of CSV files and corresponding table names
     csv_files = {
         'application': 'Application',
@@ -14,12 +14,11 @@ def upload_csv_to_db(db_name='applications.db'):
         'position': 'Position'
     }
 
-    conn = sqlite3.connect(db_name)
+    conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
-    # Iterate over the CSV files and upload data to the corresponding table
     for file_name, table_name in csv_files.items():
-        csv_path = os.path.join(os.getcwd(), f'{file_name}.csv')
+        csv_path = os.path.join(os.getcwd(), f'csv\{file_name}.csv')
 
         if not os.path.exists(csv_path):
             print(f"Warning: {csv_path} does not exist. Skipping.")
