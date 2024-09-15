@@ -1,25 +1,46 @@
+import os
 import sqlite3
 import csv
 
 DB_NAME = 'applications.db'
 
 
-def upload_csv_to_db(csv_file, table_name, db_name='applications.db'):
+def upload_csv_to_db(db_name='applications.db'):
+    # List of CSV files and corresponding table names
+    csv_files = {
+        'application': 'Application',
+        'company': 'Company',
+        'interview': 'Interview',
+        'position': 'Position'
+    }
+
     conn = sqlite3.connect(db_name)
     cursor = conn.cursor()
 
-    with open(csv_file, 'r') as file:
-        reader = csv.reader(file)
-        columns = next(reader)  # Get column headers
-        query = f'INSERT INTO {table_name} ({", ".join(columns)}) VALUES ({
-            ", ".join(["?" for _ in columns])})'
+    # Iterate over the CSV files and upload data to the corresponding table
+    for file_name, table_name in csv_files.items():
+        csv_path = os.path.join(os.getcwd(), f'{file_name}.csv')
 
-        for data in reader:
-            cursor.execute(query, data)
+        if not os.path.exists(csv_path):
+            print(f"Warning: {csv_path} does not exist. Skipping.")
+            continue
+
+        with open(csv_path, 'r') as file:
+            reader = csv.reader(file)
+            columns = next(reader)  # Get column headers
+
+            query = f'INSERT INTO {table_name} ({", ".join(columns)}) VALUES ({
+                ", ".join(["?" for _ in columns])})'
+
+            for data in reader:
+                cursor.execute(query, data)
+
+        print(f"Data successfully imported to {
+              table_name} table from {csv_path}")
 
     conn.commit()
     conn.close()
-    print(f"Data successfully imported to {table_name} table.")
+
 
 
 def create_job_application(application_job_name, company_name, position_name, category, year_experience, application_date, followup_date, salary, status):
