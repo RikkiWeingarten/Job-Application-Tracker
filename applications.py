@@ -1,7 +1,7 @@
 import sqlite3
 import csv
 
-DB_NAME = 'applications.sql'
+DB_NAME = 'applications.db'
 
 
 def upload_csv_to_db(csv_file, table_name, db_name='applications.db'):
@@ -64,23 +64,31 @@ def delete_job_application(app_id):
     conn.close()
 
 
-def get_applications_by_company(company_id):
+def get_applications_by_company(company_name):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
-    cursor.execute('''
-        SELECT * FROM Application WHERE company_id = ?
-    ''', (company_id,))
+    query = '''
+        SELECT Application.* 
+        FROM Application
+        JOIN Company ON Application.company_id = Company.id
+        WHERE Company.company_name = ?
+    '''
+    cursor.execute(query, (company_name,))
     rows = cursor.fetchall()
     conn.close()
     return rows
 
 
-def get_applications_by_position(position_id):
+def get_applications_by_position(position_name):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
-    cursor.execute('''
-        SELECT * FROM Application WHERE position_id = ?
-    ''', (position_id,))
+    query = '''
+        SELECT Application.*
+        FROM Application
+        JOIN Position ON Application.position_id = Position.id
+        WHERE Position.position_name = ?
+    '''
+    cursor.execute(query, (position_name,))
     rows = cursor.fetchall()
     conn.close()
     return rows
@@ -89,9 +97,11 @@ def get_applications_by_position(position_id):
 def get_applications_by_status(status):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
-    cursor.execute('''
-        SELECT * FROM Application WHERE status = ?
-    ''', (status,))
+    query = '''
+        SELECT * FROM Application
+        WHERE status = ?
+    '''
+    cursor.execute(query, (status,))
     rows = cursor.fetchall()
     conn.close()
     return rows

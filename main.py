@@ -41,7 +41,8 @@ def main():
             place = input("Enter interview place: ")
             type = input("Enter interview type (technical/hr/manager): ")
             company_id = int(input("Enter company ID: "))
-            create_interview(round, place, type, company_id)
+            app_id = int(input("Enter application ID: "))
+            create_interview(round, place, type, company_id, app_id)
 
         elif choice == "4":
             app_id = int(input("Enter application ID: "))
@@ -53,29 +54,38 @@ def main():
             delete_job_application(app_id)
 
         elif choice == "6":
-            company_name = int(input("Enter company name: "))
+            company_name = input("Enter company name: ")
             applications = get_applications_by_company(company_name)
+            print("\n--- Applications for Company:", company_name, "---")
             for app in applications:
-                print(app)
+                print(f"Application ID: {app[0]}\nJob Name: {app[1]}\nPosition ID: {app[2]}\nCompany ID: {app[3]}"
+                      f"\nApplication Date: {app[4]}\nFollow-up Date: {app[5]}\nSalary: {app[6]}\nStatus: {app[7]}\n")
 
         elif choice == "7":
-            position = int(input("Enter position: "))
+            position = input("Enter position: ")
             applications = get_applications_by_position(position)
+            print(f"\n--- Applications for Position: {position} ---")
             for app in applications:
-                print(app)
+                print(f"Application ID: {app[0]}\nJob Name: {app[1]}\nCompany ID: {app[2]}\nPosition ID: {app[3]}"
+                      f"\nApplication Date: {app[4]}\nFollow-up Date: {app[5]}\nSalary: {app[6]}\nStatus: {app[7]}\n")
 
         elif choice == "8":
             status = input("Enter application status (open/closed): ")
             applications = get_applications_by_status(status)
+            print(f"\n--- Applications with Status: {status} ---")
             for app in applications:
-                print(app)
+                print(f"Application ID: {app[0]}\nJob Name: {app[1]}\nCompany ID: {app[2]}\nPosition ID: {app[3]}"
+                      f"\nApplication Date: {app[4]}\nFollow-up Date: {app[5]}\nSalary: {app[6]}\nStatus: {app[7]}\n")
 
         elif choice == "9":
             company_name = input("Enter company name: ")
             position_name = input("Enter position name: ")
             results = track_job_application(company_name, position_name)
+            print(
+                f"\n--- Tracking Job Application for {position_name} at {company_name} ---")
             for result in results:
-                print(result)
+                print(f"Job Name: {result[0]}\nStatus: {result[1]}\nInterview Round: {
+                      result[2]}\nInterview Type: {result[3]}\n")
 
         elif choice == "0":
             print("Exiting...")
