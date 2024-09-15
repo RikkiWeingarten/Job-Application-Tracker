@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a Python terminal project designed to manage job applications for a specific user. It provides a command-line interface for users to interact with job application data, perform CRUD operations, sort through applications etc.
+This is a Python terminal project designed to manage job applications for a specific user. It provides a command-line interface for users to interact with job application data, perform CRUD operations, sort through job applications etc.
 
 ## Features
 
@@ -10,6 +10,7 @@ This is a Python terminal project designed to manage job applications for a spec
 - View application details by filter
 - Add, update and delete interviews
 - Import data from CSV
+- fetch gross salaries by api filtered by location and position
 
 ## Requirements
 
