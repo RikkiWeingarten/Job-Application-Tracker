@@ -3,7 +3,9 @@ from applications import (
     get_applications_by_company, get_applications_by_position, get_applications_by_status, track_job_application
 )
 
-
+from salaries_api import (
+    get_salary_data
+)
 def main():
     while True:
         print("\n--- Job Application System ---")
@@ -16,6 +18,7 @@ def main():
         print("7. Select job applications by position")
         print("8. Select job applications by status")
         print("9. Track job application")
+        print("10. Get salary data")
         print("0. Exit")
 
         choice = input("Enter your choice: ")
@@ -87,6 +90,34 @@ def main():
                 print(f"Job Name: {result[0]}\nStatus: {result[1]}\nInterview Round: {
                       result[2]}\nInterview Type: {result[3]}\n")
 
+        elif choice == "10":
+            job_title = input("Enter job title: ")
+            location = input("Enter location: ")
+            salary_data = get_salary_data(job_title, location)
+
+            if salary_data and salary_data.get('status') == 'OK':
+                print("\n--- Salary Data ---")
+                results = salary_data.get('data', [])
+                if results:
+                    for result in results:
+                        print(f"Job Title: {result.get('job_title', 'N/A')}")
+                        print(f"Location: {result.get('location', 'N/A')}")
+                        print(f"Publisher: {result.get(
+                            'publisher_name', 'N/A')}")
+                        print(f"Link: {result.get('publisher_link', 'N/A')}")
+                        print(f"Salary Range: {result.get('min_salary', 'N/A')} - {
+                              result.get('max_salary', 'N/A')} {result.get('salary_currency', 'N/A')}")
+                        print(f"Median Salary: {result.get(
+                            'median_salary', 'N/A')} {result.get('salary_currency', 'N/A')}")
+                        print(f"Salary Period: {
+                              result.get('salary_period', 'N/A')}")
+                        print("-" * 50)  # separator for readability
+                else:
+                    print("No salary data found for this job title and location.")
+            else:
+                print("Failed to retrieve salary data. Please try again.")
+
+                
         elif choice == "0":
             print("Exiting...")
             break
