@@ -17,7 +17,7 @@ def main():
         print("6. Select job applications by company")
         print("7. Select job applications by position")
         print("8. Select job applications by status")
-        print("9. Track job application")
+        print("9. Track job application")                                             
         print("10. Get salary data")
         print("0. Exit")
 
